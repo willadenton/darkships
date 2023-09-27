@@ -1,0 +1,30 @@
+import os
+import subprocess
+import time
+
+# Configure the audio settings (adjust as needed)
+audio_format = "S16_LE"
+sample_rate = 44100  # 44.1 kHz
+duration = 10  # Recording duration in seconds
+output_file = "hydrophone_recording.wav"
+
+# Record audio using the arecord command (ALSA)
+command = f"arecord -f {audio_format} -r {sample_rate} -d {duration} {output_file}"
+subprocess.call(command, shell=True)
+
+# Analyze the recorded audio data (add your analysis code here)
+# You can use libraries like NumPy, SciPy, and matplotlib for analysis.
+
+# Example: Plot the recorded audio waveform
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = np.fromfile(output_file, dtype=np.int16)
+time_axis = np.linspace(0, duration, len(data))
+
+plt.figure(figsize=(10, 4))
+plt.plot(time_axis, data)
+plt.title("Hydrophone Recording")
+plt.xlabel("Time (s)")
+plt.ylabel("Amplitude")
+plt.show()
